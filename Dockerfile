@@ -145,7 +145,15 @@ RUN unzip /tmp/gradle-8.12-bin.zip -d /opt/gradle/wrapper/dists/gradle-8.12-bin/
 RUN touch /opt/gradle/wrapper/dists/gradle-8.12-bin/cetblhg4pflnnks72fxwobvgv/gradle-8.12-bin.ok
 RUN touch /opt/gradle/wrapper/dists/gradle-8.12-bin/cetblhg4pflnnks72fxwobvgv/gradle-8.12-bin.lck
 
-ENV GRADLE_HOME=/opt/gradle/gradle-8.12/bin
+# SETTINGS FOR GRADLE 8.14.3
+ADD https://services.gradle.org/distributions/gradle-8.14.3-bin.zip /tmp
+RUN mkdir -p /opt/gradle/wrapper/dists/gradle-8.14.3-bin/cv11ve7ro1n3o1j4so8xd9n66
+RUN cp /tmp/gradle-8.12-bin.zip /opt/gradle/wrapper/dists/gradle-8.14.3-bin/cv11ve7ro1n3o1j4so8xd9n66
+RUN unzip /tmp/gradle-8.12-bin.zip -d /opt/gradle/wrapper/dists/gradle-8.14.3-bin/cv11ve7ro1n3o1j4so8xd9n66
+RUN touch /opt/gradle/wrapper/dists/gradle-8.14.3-bin/cv11ve7ro1n3o1j4so8xd9n66/gradle-8.14.3-bin.ok
+RUN touch /opt/gradle/wrapper/dists/gradle-8.14.3-bin/cv11ve7ro1n3o1j4so8xd9n66/gradle-8.14.3-bin.lck
+
+ENV GRADLE_HOME=/opt/gradle/gradle-8.14.3/bin
 
 # Install vcpkg
 WORKDIR /var/lib
@@ -165,4 +173,5 @@ ENV VCPKG_ROOT=/var/lib/vcpkg
 # --- SENTRY CLI
 # ------------------------------------------------------
 RUN curl -sL https://sentry.io/get-cli/ | sh
+
 
