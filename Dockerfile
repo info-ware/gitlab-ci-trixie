@@ -131,10 +131,6 @@ RUN git clone https://github.com/microsoft/vcpkg.git \
  && ./vcpkg integrate install \
  && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# --- Non-root user for security ---
-RUN useradd -m infoware && chown -R infoware /sdk /var/lib/vcpkg /scripts
-USER infoware
-WORKDIR /home/infoware
 
 # add ccache to PATH
 ENV PATH=/usr/lib/ccache:${GRADLE_HOME}:${PATH}
@@ -149,6 +145,10 @@ ENV VCPKG_ROOT=/var/lib/vcpkg
 RUN curl -sL https://sentry.io/get-cli/ | sh
 
 
+# --- Non-root user for security ---
+RUN useradd -m infoware && chown -R infoware /sdk /var/lib/vcpkg /scripts
+#USER infoware
+#WORKDIR /home/infoware
 
 
 
