@@ -81,10 +81,6 @@ RUN mv ./android-ndk-${ANDROID_NDK_VERSION}/* ${ANDROID_NDK_HOME}
 # remove temp dir
 RUN rm -rf /opt/android-ndk-tmp
 
-# TODO: Remove this when r18b is no longer needed
-ENV ANDROID_NDK_VERSION="r18b"
-ENV ANDROID_NDK_HOME=/sdk/ndk/18.1.5063045
-
 # download
 RUN mkdir -p /opt/android-ndk-tmp
 WORKDIR /opt/android-ndk-tmp
@@ -158,6 +154,7 @@ ENV VCPKG_ROOT=/var/lib/vcpkg
 # --- SENTRY CLI
 # ------------------------------------------------------
 RUN curl -sL https://sentry.io/get-cli/ | sh
+
 
 
 
