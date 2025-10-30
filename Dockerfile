@@ -147,8 +147,8 @@ RUN curl -sL https://sentry.io/get-cli/ | sh
 
 # --- Non-root user for security ---
 RUN useradd -m infoware && chown -R infoware /sdk /var/lib/vcpkg /scripts
-#USER infoware
-#WORKDIR /home/infoware
+USER infoware
+WORKDIR /home/infoware
 
 
 
