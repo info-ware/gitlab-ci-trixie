@@ -14,7 +14,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends  \
 	zlib1g-dev zip unzip \
 	libxext-dev libz3-dev libsdl2-dev libogg-dev libvorbis-dev \
 	ninja-build \
-	doxygen doxygen-latex graphviz wget ccache rsync joe 	  
+	doxygen doxygen-latex graphviz wget ccache rsync 	  
+
+
+RUN apt-get update && apt-get install -y --no-install-recommends joe libfreetype6-dev  libsdl2-ttf-dev
 
 
 # Java
@@ -120,12 +123,18 @@ RUN touch /opt/gradle/wrapper/dists/gradle-8.14.3-bin/cv11ve7ro1n3o1j4so8xd9n66/
 
 ENV GRADLE_HOME=/opt/gradle/gradle-8.14.3/bin
 
-# Install vcpkg
+# --- Install vcpkg ---
 WORKDIR /var/lib
-RUN git clone https://github.com/microsoft/vcpkg.git
-WORKDIR /var/lib/vcpkg
-RUN ./bootstrap-vcpkg.sh
-RUN ./vcpkg integrate install
+RUN git clone https://github.com/microsoft/vcpkg.git \
+ && cd vcpkg \
+ && ./bootstrap-vcpkg.sh \
+ && ./vcpkg integrate install \
+ && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# --- Non-root user for security ---
+RUN useradd -m infoware && chown -R infoware /sdk /var/lib/vcpkg /scripts
+USER infoware
+WORKDIR /home/infoware
 
 # add ccache to PATH
 ENV PATH=/usr/lib/ccache:${GRADLE_HOME}:${PATH}
