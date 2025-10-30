@@ -1,34 +1,37 @@
 FROM debian:bookworm-slim
 
-RUN apt update && apt install -y build-essential
-RUN apt install -y devscripts cmake gcc g++ debhelper 
-RUN apt install -y dh-exec pkg-config libboost-dev libboost-filesystem-dev 
-RUN apt install -y libasound2-dev libgles2-mesa-dev
-RUN apt install -y gcc-multilib g++-multilib
-RUN apt install -y libtool autoconf
-RUN apt install -y git joe ccache rsync
-RUN apt install -y libcurl4-gnutls-dev
-RUN apt install -y uuid-dev
-RUN apt install -y qt6-base-dev
-RUN apt install -y zlib1g-dev zip unzip
-RUN apt install -y libxext-dev libz3-dev libsdl2-dev libogg-dev
-RUN apt install -y ninja-build
+RUN apt-get update && apt-get install -y --no-install-recommends  \
+	build-essential \
+	devscripts cmake gcc g++ debhelper \
+	dh-exec pkg-config libboost-dev libboost-filesystem-dev \
+	libasound2-dev libgles2-mesa-dev \
+	gcc-multilib g++-multilib \
+	libtool autoconf \
+	git joe ccache rsync \
+	libcurl4-gnutls-dev \
+	uuid-dev \
+	qt6-base-dev \
+	zlib1g-dev zip unzip \
+	libxext-dev libz3-dev libsdl2-dev libogg-dev \
+	ninja-build \
+	doxygen doxygen-latex graphviz wget ccache rsync joe 	  
 
-# Tools
-RUN apt install -y doxygen doxygen-latex graphviz wget ccache rsync joe 
 
 # Java
-RUN apt install -y maven default-jdk binutils-i686-linux-gnu 
+RUN apt-get update && apt-get install -y --no-install-recommends \
+	maven default-jdk binutils-i686-linux-gnu 
 
 # Additional tools
-RUN apt install -y libboost-all-dev bzip2 curl git-core html2text libc6-i386 libc6-dev-i386
-RUN apt install -y lib32stdc++6 lib32gcc-s1 lib32z1 unzip openssh-client sshpass lftp 
-RUN apt install -y libgnutls28-dev adb 
-RUN apt install -y python3-pip
-RUN apt install -y pkg-config
+RUN apt-get update && apt-get install -y --no-install-recommends \
+	libboost-all-dev bzip2 curl git-core html2text libc6-i386 libc6-dev-i386 \
+	lib32stdc++6 lib32gcc-s1 lib32z1 unzip openssh-client sshpass lftp \
+	libgnutls28-dev adb \
+	python3-pip \
+	pkg-config \
+	&& rm -rf /var/lib/apt/lists/*
 
 # Install wget, sudo, and .NET SDK 8.0
-RUN apt install -y wget  && \
+RUN apt-get update && apt install -y --no-install-recommends wget  && \
     wget https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb -O packages-microsoft-prod.deb && \
     dpkg -i packages-microsoft-prod.deb && \
     rm packages-microsoft-prod.deb && \
@@ -63,36 +66,17 @@ RUN yes | ${ANDROID_HOME}/cmdline-tools/bin/sdkmanager --licenses --sdk_root=/sd
 RUN ${ANDROID_HOME}/cmdline-tools/bin/sdkmanager --package_file=/sdk/packages.txt --sdk_root=/sdk
 
 # ------------------------------------------------------
-# --- Android NDK
+# --- Android NDK via sdkmanager (no zips, no mv)
 # ------------------------------------------------------
-ENV ANDROID_NDK_VERSION="r28"
-ENV ANDROID_NDK_HOME=/sdk/ndk/28.0.13004108
+ENV ANDROID_NDK_REV=28.0.13004108
+# ensure licenses already accepted earlier in your Dockerfile
 
-# download
-RUN mkdir -p /opt/android-ndk-tmp
-WORKDIR /opt/android-ndk-tmp
-RUN wget  https://dl.google.com/android/repository/android-ndk-${ANDROID_NDK_VERSION}-linux.zip
+# install the exact NDK revision
+RUN yes | ${ANDROID_HOME}/cmdline-tools/bin/sdkmanager --sdk_root=/sdk "ndk;${ANDROID_NDK_REV}"
 
-# uncompress
-RUN unzip android-ndk-${ANDROID_NDK_VERSION}-linux.zip
-# move to its final location
-RUN mkdir -p ${ANDROID_NDK_HOME}
-RUN mv ./android-ndk-${ANDROID_NDK_VERSION}/* ${ANDROID_NDK_HOME}
-# remove temp dir
-RUN rm -rf /opt/android-ndk-tmp
-
-# download
-RUN mkdir -p /opt/android-ndk-tmp
-WORKDIR /opt/android-ndk-tmp
-RUN wget  https://dl.google.com/android/repository/android-ndk-${ANDROID_NDK_VERSION}-linux-x86_64.zip
-
-# uncompress
-RUN unzip android-ndk-${ANDROID_NDK_VERSION}-linux-x86_64.zip
-# move to its final location
-RUN mkdir -p ${ANDROID_NDK_HOME}
-RUN mv ./android-ndk-${ANDROID_NDK_VERSION}/* ${ANDROID_NDK_HOME}
-# remove temp dir
-RUN rm -rf /opt/android-ndk-tmp
+# export NDK path
+ENV ANDROID_NDK_HOME=/sdk/ndk/${ANDROID_NDK_REV}
+ENV PATH="${PATH}:${ANDROID_NDK_HOME}"
 
 
 
@@ -129,8 +113,8 @@ RUN touch /opt/gradle/wrapper/dists/gradle-8.12-bin/cetblhg4pflnnks72fxwobvgv/gr
 # SETTINGS FOR GRADLE 8.14.3
 ADD https://services.gradle.org/distributions/gradle-8.14.3-bin.zip /tmp
 RUN mkdir -p /opt/gradle/wrapper/dists/gradle-8.14.3-bin/cv11ve7ro1n3o1j4so8xd9n66
-RUN cp /tmp/gradle-8.12-bin.zip /opt/gradle/wrapper/dists/gradle-8.14.3-bin/cv11ve7ro1n3o1j4so8xd9n66
-RUN unzip /tmp/gradle-8.12-bin.zip -d /opt/gradle/wrapper/dists/gradle-8.14.3-bin/cv11ve7ro1n3o1j4so8xd9n66
+RUN cp /tmp/gradle-8.14.3-bin.zip /opt/gradle/wrapper/dists/gradle-8.14.3-bin/cv11ve7ro1n3o1j4so8xd9n66
+RUN unzip /tmp/gradle-8.14.3-bin.zip -d /opt/gradle/wrapper/dists/gradle-8.14.3-bin/cv11ve7ro1n3o1j4so8xd9n66
 RUN touch /opt/gradle/wrapper/dists/gradle-8.14.3-bin/cv11ve7ro1n3o1j4so8xd9n66/gradle-8.14.3-bin.ok
 RUN touch /opt/gradle/wrapper/dists/gradle-8.14.3-bin/cv11ve7ro1n3o1j4so8xd9n66/gradle-8.14.3-bin.lck
 
