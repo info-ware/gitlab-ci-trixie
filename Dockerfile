@@ -12,6 +12,7 @@ RUN apt install -y uuid-dev
 RUN apt install -y qt6-base-dev
 RUN apt install -y zlib1g-dev zip unzip
 RUN apt install -y libxext-dev libz3-dev
+RUN apt install -y ninja-build
 
 # Tools
 RUN apt install -y doxygen doxygen-latex graphviz wget ccache rsync joe 
@@ -173,5 +174,6 @@ ENV VCPKG_ROOT=/var/lib/vcpkg
 # --- SENTRY CLI
 # ------------------------------------------------------
 RUN curl -sL https://sentry.io/get-cli/ | sh
+
 
 
