@@ -122,22 +122,6 @@ ADD scripts/send_ftp.sh /scripts
 ENV PATH ${PATH}:${ANDROID_NDK_HOME}
 
 
-# SETTINGS FOR GRADLE 7.6
-ADD https://services.gradle.org/distributions/gradle-7.6-bin.zip /tmp
-RUN mkdir -p /opt/gradle/wrapper/dists/gradle-7.6-bin/9l9tetv7ltxvx3i8an4pb86ye
-RUN cp /tmp/gradle-7.6-bin.zip /opt/gradle/wrapper/dists/gradle-7.6-bin/9l9tetv7ltxvx3i8an4pb86ye
-RUN unzip /tmp/gradle-7.6-bin.zip -d /opt/gradle/wrapper/dists/gradle-7.6-bin/9l9tetv7ltxvx3i8an4pb86ye
-RUN touch /opt/gradle/wrapper/dists/gradle-7.6-bin/9l9tetv7ltxvx3i8an4pb86ye/gradle-7.6-bin.ok
-RUN touch /opt/gradle/wrapper/dists/gradle-7.6-bin/9l9tetv7ltxvx3i8an4pb86ye/gradle-7.6-bin.lck
-
-# SETTINGS FOR GRADLE 8.7
-ADD https://services.gradle.org/distributions/gradle-8.7-bin.zip /tmp
-RUN mkdir -p /opt/gradle/wrapper/dists/gradle-8.7-bin/bhs2wmbdwecv87pi65oeuq5iu
-RUN cp /tmp/gradle-8.7-bin.zip /opt/gradle/wrapper/dists/gradle-8.7-bin/bhs2wmbdwecv87pi65oeuq5iu
-RUN unzip /tmp/gradle-8.7-bin.zip -d /opt/gradle/wrapper/dists/gradle-8.7-bin/bhs2wmbdwecv87pi65oeuq5iu
-RUN touch /opt/gradle/wrapper/dists/gradle-8.7-bin/bhs2wmbdwecv87pi65oeuq5iu/gradle-8.7-bin.ok
-RUN touch /opt/gradle/wrapper/dists/gradle-8.7-bin/bhs2wmbdwecv87pi65oeuq5iu/gradle-8.7-bin.lck
-
 # SETTINGS FOR GRADLE 8.12
 ADD https://services.gradle.org/distributions/gradle-8.12-bin.zip /tmp
 RUN mkdir -p /opt/gradle/wrapper/dists/gradle-8.12-bin/cetblhg4pflnnks72fxwobvgv
@@ -174,6 +158,7 @@ ENV VCPKG_ROOT=/var/lib/vcpkg
 # --- SENTRY CLI
 # ------------------------------------------------------
 RUN curl -sL https://sentry.io/get-cli/ | sh
+
 
 
 
