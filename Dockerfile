@@ -11,7 +11,7 @@ RUN apt install -y libcurl4-gnutls-dev
 RUN apt install -y uuid-dev
 RUN apt install -y qt6-base-dev
 RUN apt install -y zlib1g-dev zip unzip
-RUN apt install -y libxext-dev libz3-dev
+RUN apt install -y libxext-dev libz3-dev libsdl2-dev libogg-dev
 RUN apt install -y ninja-build
 
 # Tools
@@ -154,6 +154,7 @@ ENV VCPKG_ROOT=/var/lib/vcpkg
 # --- SENTRY CLI
 # ------------------------------------------------------
 RUN curl -sL https://sentry.io/get-cli/ | sh
+
 
 
 
