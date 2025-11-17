@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends  \
 	uuid-dev \
 	qt6-base-dev \
 	zlib1g-dev zip unzip \
-	libxext-dev libz3-dev libsdl2-dev libogg-dev libvorbis-dev \
+	libxext-dev libz3-dev libsdl2-dev libogg-dev libvorbis-dev libpq-dev\
 	ninja-build \
 	doxygen doxygen-latex graphviz wget ccache rsync 	  
 
@@ -149,6 +149,7 @@ RUN curl -sL https://sentry.io/get-cli/ | sh
 RUN useradd -m infoware && chown -R infoware /sdk /var/lib/vcpkg /scripts
 USER infoware
 WORKDIR /home/infoware
+
 
 
 
