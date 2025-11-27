@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends  \
 	qt6-base-dev \
 	zlib1g-dev zip unzip \
 	libxext-dev libz3-dev libsdl2-dev libogg-dev libvorbis-dev libpq-dev\
-	ninja-build \
+#	ninja-build \
 	doxygen doxygen-latex graphviz wget ccache rsync 	  
 
 
