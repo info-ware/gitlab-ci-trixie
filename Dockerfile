@@ -1,4 +1,4 @@
-FROM debian:bookworm-slim
+FROM debian:trixie-slim
 
 RUN apt-get update && apt-get install -y --no-install-recommends  \
 	build-essential \
@@ -34,7 +34,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # Install wget, sudo, and .NET SDK 8.0
 RUN apt-get update && apt install -y --no-install-recommends wget  && \
-    wget https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb -O packages-microsoft-prod.deb && \
+    wget https://packages.microsoft.com/config/debian/13/packages-microsoft-prod.deb -O packages-microsoft-prod.deb && \
     dpkg -i packages-microsoft-prod.deb && \
     rm packages-microsoft-prod.deb && \
     apt-get update && \
@@ -148,6 +148,7 @@ RUN curl -sL https://sentry.io/get-cli/ | sh
 #RUN useradd -m infoware && chown -R infoware /sdk /var/lib/vcpkg /scripts
 #USER infoware
 #WORKDIR /home/infoware
+
 
 
 
