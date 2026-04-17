@@ -17,7 +17,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends  \
 
 # i386 stuff
 RUN dpkg --add-architecture i386
-RUN apt-get update && apt-get install -y libasound2-dev:i386 libgles2-mesa-dev:i386 zlib1g-dev:i386
+RUN apt-get update && apt-get install -y libasound2-dev:i386 libgles2-mesa-dev:i386 zlib1g-dev:i386 libxcursor-dev:i386 libxinerama-dev:i386 libxi-dev:i386 libxrandr-dev:i386 libxss-dev:i386 libxxf86vm-dev:i386
+
 
 # Additional
 RUN apt-get update && apt-get install -y --no-install-recommends libfreetype6-dev  libsdl2-ttf-dev
