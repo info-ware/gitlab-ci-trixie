@@ -75,7 +75,7 @@ RUN ${ANDROID_HOME}/cmdline-tools/bin/sdkmanager --package_file=/sdk/packages.tx
 # ------------------------------------------------------
 # --- Android NDK via sdkmanager (no zips, no mv)
 # ------------------------------------------------------
-ENV ANDROID_NDK_REV=28.0.13004108
+ENV ANDROID_NDK_REV=28.2.13676358
 # ensure licenses already accepted earlier in your Dockerfile
 
 # install the exact NDK revision
